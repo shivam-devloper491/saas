@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Social Content OS — MVP Execution Center</title>
+  <meta name="description" content="Complete developer execution guide, roadmap, architecture, and task tracker for building the AI Social Content OS SaaS MVP.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              750: '#293548',
+              850: '#151f32',
+              950: '#090d16'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased bg-grid-pattern selection:bg-blue-600 selection:text-white">
+
+  <!-- TOP HEADER -->
+  <header id="top-header" class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 transition-colors">
+    <!-- Rendered dynamically by app.js -->
+  </header>
+
+  <!-- MAIN 3-COLUMN LAYOUT -->
+  <div class="flex-1 max-w-[1700px] w-full mx-auto flex overflow-hidden">
+    
+    <!-- MOBILE BACKDROP -->
+    <div id="mobile-backdrop" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity"></div>
+
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside id="sidebar-container" class="fixed lg:sticky top-16 z-50 lg:z-10 w-72 h-[calc(100vh-4rem)] bg-slate-950 lg:bg-slate-950/60 backdrop-blur-md border-r border-slate-800/80 overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex-shrink-0">
+      <div id="sidebar-nav">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </aside>
+
+    <!-- CENTER DOCUMENTATION WORKSPACE -->
+    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+      <div id="main-content">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </main>
+
+    <!-- RIGHT PROGRESS & METRICS PANEL -->
+    <aside id="right-progress-container" class="hidden xl:block w-80 sticky top-16 h-[calc(100vh-4rem)] border-l border-slate-800/80 overflow-y-auto flex-shrink-0 bg-slate-950/40">
+      <div id="right-progress-panel">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- COMMAND PALETTE MODAL (Ctrl + K) -->
+  <div id="command-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-start justify-center pt-16 sm:pt-24 px-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="p-3.5 border-b border-slate-800 flex items-center gap-3">
+        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input type="text"
+               id="command-input"
+               placeholder="Type a command, task, API, or database table..."
+               class="bg-transparent border-none text-slate-100 text-sm focus:outline-none w-full placeholder:text-slate-500 font-medium" />
+        <kbd onclick="closeCommandPalette()" class="px-2 py-0.5 bg-slate-800 text-slate-400 border border-slate-700 rounded text-[10px] font-mono cursor-pointer hover:text-slate-200">ESC</kbd>
+      </div>
+
+      <div id="command-results" class="max-h-96 overflow-y-auto p-2 space-y-1">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <div class="px-4 py-2.5 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+        <div class="flex items-center gap-2">
+          <span>Navigate with click</span>
+        </div>
+        <span>AI Social Content OS Documentation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESET PROGRESS CONFIRMATION MODAL -->
+  <div id="reset-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4">
+      <div class="w-12 h-12 rounded-xl bg-rose-950/80 border border-rose-800/60 flex items-center justify-center text-rose-400 text-xl font-bold">
+        ⚠️
+      </div>
+      <div>
+        <h3 class="text-base font-bold text-slate-100">Reset All Task Progress?</h3>
+        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+          This will reset all checked tasks, status indicators, and notes saved in your browser's LocalStorage. This action cannot be undone.
+        </p>
+      </div>
+      <div class="flex justify-end gap-3 pt-2">
+        <button onclick="closeResetModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium transition-colors">
+          Cancel
+        </button>
+        <button onclick="executeResetProgress()" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-semibold transition-colors shadow-lg shadow-rose-600/30">
+          Yes, Reset All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vanilla JS Engine -->
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

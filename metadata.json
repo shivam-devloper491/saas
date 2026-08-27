@@ -1,0 +1,6 @@
+{
+  "name": "AI Social Content OS - MVP Execution Center",
+  "description": "Interactive developer execution guide, architecture reference, and task tracker for building the AI Social Content OS SaaS MVP.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
